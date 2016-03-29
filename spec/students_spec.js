@@ -1,68 +1,53 @@
 'use strict';
 
 describe('app', function() {
-  var newStudent = new app.student.new("ruchi","new york" )
-it('creates and returns a new student.', function() {
-  expect(line(newStudent.name)).toEqual("ruchi");
-}
+  // Create Students
 
+  var newStudent = new app.student.new("Bob","New York")
+  var newStudent2 = new app.student.new("Fred","Philly")
 
-//
-//   it('says the line is empty if no one is in line', function() {
-//     expect(line(katzDeli)).toEqual("The line is currently empty.");
-//   });
-//
-//   it('says who is on line when there are people waiting', function(){
-//     expect(line(otherDeli)).toEqual("The line is currently: 1. Steven, 2. Blake, 3. Avi");
-//   });
-// });
-//
-// describe('nowServing', function() {
-//
-//   var katzDeli;
-//   var otherDeli;
-//
-//   beforeEach(function() {
-//     katzDeli = [];
-//     otherDeli = ["Steven", "Blake", "Avi"];
-//   });
-//
-//   it('says the line is empty when no on is on line', function() {
-//     expect(nowServing(katzDeli)).toEqual("There is nobody waiting to be served!");
-//   });
-//
-//   it('Announces the person it is serving, and reduces the line', function(){
-//
-//     expect(nowServing(otherDeli)).toEqual("Currently serving Steven.");
-//     expect(otherDeli).toEqual(["Blake", "Avi"]);
-//   });
-// });
-//
-// describe('takeANumber', function() {
-//
-//   var katzDeli;
-//   var otherDeli;
-//
-//   beforeEach(function() {
-//     katzDeli = [];
-//     otherDeli = ["Steven", "Blake", "Avi"];
-//   });
-//
-//   it('adds a person to the line', function() {
-//     expect(takeANumber(katzDeli, 'Ada')).toEqual("Welcome, Ada. You are number 1 in line.");
-//     expect(katzDeli).toEqual(['Ada']);
-//   });
-//
-//   it('appends the person the end of the line if there are already people on it', function(){
-//     expect(takeANumber(otherDeli, 'Grace')).toEqual("Welcome, Grace. You are number 4 in line.");
-//     expect(otherDeli).toEqual(["Steven", "Blake", "Avi", "Grace"]);
-//   });
-//
-//   it("properly handles multiple people being added", function(){
-//     takeANumber(katzDeli, 'Ada');
-//     takeANumber(katzDeli, 'Grace');
-//     takeANumber(katzDeli, 'Kent');
-//
-//     expect(katzDeli).toEqual(["Ada", "Grace", "Kent"]);
-//   });
+ it('creates and returns a new student.', function() {
+  expect(newStudent.name).toEqual("Bob")
+  expect(newStudent.hometown).toEqual("New York")
+})
+it('has a counter which sets the id for students.', function() {
+  expect(newStudent.id).toEqual(1)
+  expect(newStudent2.id).toEqual(2)
+})
+
+it('stores all the student objects in an array', function() {
+  expect(app.student.all).toEqual([newStudent,newStudent2, newStudent3])
+})
+
+it('finds student by attributes', function() {
+  expect(app.student.findBy({name: "Bob"})).toEqual([newStudent])
+  expect(app.student.findBy({hometown: "Philly"})).toEqual([newStudent2])
+
+})
+// Create Classrooms
+
+var newClassroom = new app.classroom.new("Ruby","Medium" );
+var newClassroom2 = new app.classroom.new("Javascript","High" );
+newClassroom.students(newStudent)
+
+it('creates and returns a new classroom', function() {
+  expect(newClassroom.subject).toEqual("Ruby")
+  expect(newClassroom.difficulty).toEqual("Medium")
+
+})
+
+it('has a counter which sets the id for classroom.', function() {
+  expect(newClassroom.id).toEqual(1)
+  expect(newClassroom2.id).toEqual(2)
+})
+
+it('stores all the classroom objects in an array', function() {
+  expect(app.classroom.all).toEqual([newClassroom,newClassroom2])
+})
+var newStudent3 = new app.student.new("Bobby","New York",newClassroom)
+
+it('creates and returns a new classroom', function() {
+  expect(newClassroom.students()).toEqual([newStudent3])
+})
+
 });

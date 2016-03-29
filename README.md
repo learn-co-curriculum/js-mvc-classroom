@@ -1,50 +1,70 @@
-# Deli Counter - Take a Number
+# Classroom -
 
-## Objectives
-+ Add elements to an array
-+ Return items from an array
-+ Iterate through an array
-+ Pass an array as a function parameter
+## Learning Objectives
+  -private methods
+  -name spacing
+  -private variables
+  -object relations in javascript
+  -immediately invoked functions
+
+## Lab Objectives
++ Create Students
+    + Should have name and hometown.
+    + Set Id for the students on initialization.
+    + Return an array with all students.
+
++ Create Classroom
+    + Should have subject and difficulty.
+    + Set Id for the classroom on initialization.
+    + Return an array with all classrooms.
+
++ Associate Classrooms with Students.
+    + Students can have classroom attribute.
+    + Should be able to find all students by classroom.
+
+
 
 ## Instructions
 
-A pretty important deli needs somebody to program the "Take a Number" feature for their counter.
+1) For this lab, we first have to create a students constructor function. A student should have a name and a hometown. Use the same  structure to create a student as given in the example below.
+Within this function we will create an initialize function, this will do two things -
+  a) We should also have a counter, which is incremented every time a new instance is created. This counter is used to assign IDs to each student.
+  b) We also need to add each new student into an array. eg:- app.students.all => [student1, student2]
 
-At the beginning of the day, the deli is empty and is represented by an empty array.
-eg.
+2) The student constructor function also needs to have a findBy function. This function will take a key-value pair to find the student. We need to use $.grep function to do this. This function takes in a collection and a function.
+Reference -  http://api.jquery.com/jquery.grep/ .
 
-`var katzDeli = [];`
 
-1. Build a function that a new customer will use when entering the deli. The function, `takeANumber`, should accept the current line of people, `katzDeli`, along with the new person's name as parameters. The function should return their position in line. And don't go being too programmer-y and give them their index. These are normal people. If they are 7th in line, tell them that. Don't get their hopes up by telling them they are number 6 in line.
+3) We need to make a Classroom constructor the same way we have made the student constructor. This should also have an initialize function and a findBy function.
 
-2. Build a function `nowServing`. This function should return the next person in line and then remove them from the line. If there is nobody in line, it should return "There is nobody waiting to be served!"
+4) Finally, we need to make an instance method for classroom. This should make the associations between classrooms and students. It should use the findBy function to find students which belong to a classroom.
 
-3. Build a function `line` that returns people their current place in line. If there is nobody in line, it should return "The line is currently empty."
 
-### Hint
+      Eg:-
+            var app = {
+                cats: {
+                  all: [],
+                  new: (function(){
+                        var counter = 0
+                        var cat = function Cat(name, breed){
+                          this.name = name;
+                          this.breed = breed;
 
-Example usage:
+                          var that = this
 
-  ```javascript
-  var katzDeli = [];
+                          // capture this, before the method,
+                          function initialize() {
+                            counter++
+                            that.id = counter;
+                            app.cats.all.push(that);
+                          };
 
-  takeANumber(katzDeli, "Ada"); // 1
-  takeANumber(katzDeli, "Grace"); // 2
-  takeANumber(katzDeli, "Kent"); // 3
+                          initialize();
+                        }
+                        return cat
+                      }()),
+                    }
+                  });
 
-  line(katzDeli); // "The line is currently: 1. Ada 2. Grace 3. Kent"
-
-  nowServing(katzDeli); // "Currently serving Ada."
-
-  line(katzDeli); // "The line is currently: 1. Grace 2. Kent"
-
-  takeANumber(katzDeli, "Matz"); // "3"
-
-  line(katzDeli); // "The line is currently: 1. Grace 2. Kent 3. Matz"
-
-  nowServing(katzDeli); // "Currently serving Grace."
-
-  line(katzDeli); // "The line is currently: 1. Kent 2. Matz"
-  ```
-
-<p data-visibility='hidden'>View <a href='https://learn.co/lessons/js-deli-counter' title='Deli Counter - Take a Number'>Deli Counter - Take a Number</a> on Learn.co and start learning to code for free.</p>
+                  var bob = new app.cats.new("Bob", "Persian")
+                  bob.breed => "Persian"
