@@ -1,8 +1,26 @@
 'use strict';
 
+// the first thing I would do is test for namespacing
+
+
 describe('app', function() {
   // Create Students
 
+  it('places all student class methods in a namespaced hash', function() {
+    expect(app.student).toBeA("Hash")
+  })  
+
+  it('defines an array to store all of the created students', function() {
+    expect(app.student.new).toBeA("array")
+  })  
+
+  it('defines a constructor function within that student namespaced hash', function() {
+    expect(app.student.new).toBeA("function")
+    // Note that this namespaced hash defines all class methods
+  })  
+
+// describe app.student.new 
+  // I'm unsure of the syntax for this
   var newStudent = new app.student.new("Bob","New York")
   var newStudent2 = new app.student.new("Fred","Philly")
 
@@ -25,6 +43,7 @@ it('finds student by attributes', function() {
 
 })
 // Create Classrooms
+  // move this to a different spec file
 
 var newClassroom = new app.classroom.new("Ruby","Medium" );
 var newClassroom2 = new app.classroom.new("Javascript","High" );
